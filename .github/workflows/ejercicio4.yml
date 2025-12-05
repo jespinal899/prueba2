@@ -2,4 +2,31 @@ name: Ejercicio 4 - Matrix Multi-OS
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+
+jobs:
+  test-multi-os:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Ejecutar tests
+        run: npm test
+
+      - name: Mostrar OS
+        run: echo "Este job corre en ${{ runner.os }}"
+
+      - name: Solo en Linux
+        if: runner.os == 'Linux'
+        run: echo "Este step solo aparece en Linux"
