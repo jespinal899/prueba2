@@ -1,0 +1,5 @@
+name: Ejercicio 4 - Matrix Multi-OS
+
+on:
+  push:
+    branches: [ main ]
